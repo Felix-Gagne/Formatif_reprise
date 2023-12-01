@@ -9,7 +9,14 @@ import {bounce, flip, shake} from "ng-animate";
   animations:[
     trigger('bounce', [transition(':increment', useAnimation(bounce))]),
     trigger('shake', [transition(':increment', useAnimation(shake))]),
-    trigger('flip', [transition(':increment', useAnimation(flip))])
+    trigger('flip', [transition(':increment', useAnimation(flip))]),
+    trigger('shakeBounceFlip', [
+      transition(':increment', [
+        useAnimation(shake, {params: {timing: 0.8, delay: 2}}),
+        useAnimation(flip, {params: {timing: 10, delay: 2}}),
+        useAnimation(bounce, {params: {timing: 0.9, delay: 2}}),
+      ])
+    ])
   ]
 })
 export class AppComponent {
@@ -22,6 +29,7 @@ export class AppComponent {
   css_shake= false;
   css_bounce = false;
   css_flip = false;
+  shakeBounceFlipNumber = 1;
 
   constructor() {
   }
@@ -39,6 +47,10 @@ export class AppComponent {
   flipMe() {
     this.css_flip = true;
     setTimeout(() => {this.css_flip = false;},1000);
+  }
+
+  shakeBounceFlip() {
+    this.shakeBounceFlipNumber++;
   }
 
 }
