@@ -130,7 +130,7 @@ namespace question2.Services.Tests
                 Id = 1,
                 Address = "abc",
                 OwnerName = "Foo",
-                Cats = null
+                Cats = new List<Cat>()
             };
 
             House h2 = new House
@@ -138,13 +138,13 @@ namespace question2.Services.Tests
                 Id = 2,
                 Address = "def",
                 OwnerName = "Faa",
-                Cats = null
+                Cats = new List<Cat>()
             };
 
             h1.Cats.Add(cat);
             cat.House = h1;
 
-            Assert.ThrowsException<DontStealMyCatException>(() => service.Move(cat.Id, h1, h2));
+            Assert.ThrowsException<DontStealMyCatException>(() => service.Move(cat.Id, h2, h1));
         }
 
         [TestMethod()]
@@ -158,26 +158,33 @@ namespace question2.Services.Tests
                 Id = 1,
                 Address = "abc",
                 OwnerName = "Foo",
-                Cats = null
-            };
-
-            Cat cat = new Cat
-            {
-                Id = 1,
-                Age = 2,
-                Name = "Foo",
-                House = h1
+                Cats = new List<Cat>()
             };
 
             House h2 = new House
             {
                 Id = 2,
                 Address = "def",
-                OwnerName = "Faa",
-                Cats = null
+                OwnerName = "",
+                Cats = new List<Cat>()
             };
 
-            Assert.AreEqual(cat, service.Move(cat.Id, cat.House, h2));
+            Cat cat = new Cat
+            {
+                Id=3,
+                Age = 1,
+                Name = "Fee",
+                House = h1,
+            };
+
+            db.Cat.Add(cat);
+            db.House.Add(h2);
+            db.House.Add(h1);
+            db.SaveChanges();
+
+            Cat movedCat = service.Move(cat.Id, cat.House, h2);
+
+            Assert.AreEqual(h2, movedCat.House);
         }
 
         [TestCleanup]
