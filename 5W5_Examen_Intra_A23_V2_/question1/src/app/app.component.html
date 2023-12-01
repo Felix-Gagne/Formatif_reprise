@@ -1,0 +1,8 @@
+<mat-toolbar style="display: flex;">
+  <mat-icon style="margin-right: 8px" routerLink="/">class</mat-icon>
+  <a routerLink="/"><span>Super Question 2 Infinie</span></a>
+  <span style="flex: 1 1 auto;"></span>
+  <span>{{user.currentUser?.username}}</span>
+  <button mat-raised-button [routerLink]="['/login']" style="margin-right: 20px;">Se connecter</button>
+</mat-toolbar>
+<router-outlet></router-outlet>

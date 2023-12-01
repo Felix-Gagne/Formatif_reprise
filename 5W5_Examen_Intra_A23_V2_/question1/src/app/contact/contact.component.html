@@ -1,0 +1,28 @@
+<form [formGroup]="form">
+
+    <mat-form-field style="width: 100%">
+        <mat-label>Nom</mat-label>
+        <input matInput type="text" placeholder="Nom et prénom" name="name">
+    </mat-form-field>
+
+
+    <mat-label>Mode de livraison</mat-label>
+    <mat-radio-group aria-label="Mode de livraison" formControlName="livraison" name="livraison">
+        <mat-radio-button [value]="1">Récupérer dans la ruelle</mat-radio-button>
+        <mat-radio-button [value]="2">Livrer à la maison</mat-radio-button>
+    </mat-radio-group>
+    
+
+    <mat-form-field style="width: 100%">
+        <mat-label>Courriel</mat-label>
+        <input matInput type="email" placeholder="happy@catlover.com" name="email">
+    </mat-form-field>
+
+    <mat-form-field style="width: 100%">
+        <mat-label>Adresse</mat-label>
+        <input matInput type="text" placeholder="Numéro, rue, ville, code postal" name="address">
+    </mat-form-field>
+
+    <button  mat-raised-button color="primary">Acheter 🤷‍♂️</button>
+
+</form>
