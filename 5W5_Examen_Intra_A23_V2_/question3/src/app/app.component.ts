@@ -62,23 +62,26 @@ export class AppComponent {
       this.shake1 = false;
       this.bounce1 = true;}
       , 1000);
-      setTimeout(() => {this.bounce1 = false;}, 3000);
+
+      setTimeout(() => {
+        this.bounce1 = false;}
+        , 3000);
   }
 
   all(){
     this.shake = true;
     setTimeout(() => {
       this.shake = false;
-      this.bounce = true;
+      this.flip = true;
     }, 1000);
 
     setTimeout(() => {
-      this.bounce = false;
-      this.flip = true
+      this.flip = false;
+      this.bounce = true
     }, 3000);
 
     setTimeout(() => {
-      this.flip = false
+      this.bounce = false
     }, 5000);
   }
 

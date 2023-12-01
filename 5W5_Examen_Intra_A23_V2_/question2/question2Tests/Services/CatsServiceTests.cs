@@ -56,8 +56,8 @@ namespace question2.Services.Tests
         {
             using ApplicationDbContext db = new ApplicationDbContext(options);
             CatsService service = new CatsService(db);
-
-            Cat cat = null;
+            db.House.RemoveRange(db.House);
+            db.Cat.RemoveRange(db.Cat);
 
             House h1 = new House
             {
@@ -75,7 +75,11 @@ namespace question2.Services.Tests
                 Cats = null
             };
 
-            Assert.ThrowsException<NullReferenceException>(() => service.Move(cat.Id, h1, h2));
+            db.Add(h1);
+            db.Add(h2);
+            db.SaveChanges();
+
+            Assert.IsNull(service.Move(8, h1, h2));
         }
 
         [TestMethod()]
@@ -83,6 +87,8 @@ namespace question2.Services.Tests
         {
             using ApplicationDbContext db = new ApplicationDbContext(options);
             CatsService service = new CatsService(db);
+            db.House.RemoveRange(db.House);
+            db.Cat.RemoveRange(db.Cat);
 
             Cat cat = new Cat
             {
@@ -116,6 +122,8 @@ namespace question2.Services.Tests
         {
             using ApplicationDbContext db = new ApplicationDbContext(options);
             CatsService service = new CatsService(db);
+            db.House.RemoveRange(db.House);
+            db.Cat.RemoveRange(db.Cat);
 
             Cat cat = new Cat
             {
@@ -143,6 +151,10 @@ namespace question2.Services.Tests
 
             h1.Cats.Add(cat);
             cat.House = h1;
+            db.Cat.Add(cat);
+            db.House.Add(h2);
+            db.House.Add(h1);
+            db.SaveChanges();
 
             Assert.ThrowsException<DontStealMyCatException>(() => service.Move(cat.Id, h2, h1));
         }
@@ -152,6 +164,8 @@ namespace question2.Services.Tests
         {
             using ApplicationDbContext db = new ApplicationDbContext(options);
             CatsService service = new CatsService(db);
+            db.House.RemoveRange(db.House);
+            db.Cat.RemoveRange(db.Cat);
 
             House h1 = new House
             {
@@ -193,6 +207,7 @@ namespace question2.Services.Tests
             //TODO on efface les données de tests pour remettre la BD dans son état initial
             using ApplicationDbContext db = new ApplicationDbContext(options);
             db.Cat.RemoveRange(db.Cat);
+            db.House.RemoveRange(db.House);
             db.SaveChanges();
         }
     }
