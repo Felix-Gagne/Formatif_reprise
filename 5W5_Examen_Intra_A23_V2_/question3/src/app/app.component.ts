@@ -10,13 +10,6 @@ import {bounce, flip, shake} from "ng-animate";
     trigger('bounce', [transition(':increment', useAnimation(bounce))]),
     trigger('shake', [transition(':increment', useAnimation(shake))]),
     trigger('flip', [transition(':increment', useAnimation(flip))]),
-    trigger('shakeBounceFlip', [
-      transition(':increment', [
-        useAnimation(shake, {params: {timing: 0.8, delay: 2}}),
-        useAnimation(flip, {params: {timing: 10, delay: 2}}),
-        useAnimation(bounce, {params: {timing: 0.9, delay: 2}}),
-      ])
-    ])
   ]
 })
 export class AppComponent {
@@ -29,9 +22,23 @@ export class AppComponent {
   css_shake= false;
   css_bounce = false;
   css_flip = false;
-  shakeBounceFlipNumber = 1;
+  shake1= false;
+  bounce1= false;
+  shake= false;
+  bounce = false;
+  flip =false;
 
   constructor() {
+  }
+
+  polling(){
+    //Si on a pas arreter l'attente
+    this.shakeNbounce();
+    //Si le resultat n'est pas celui attendu
+    if(true){
+      //On recommence dans .5 seconde
+      setTimeout(() => {this.polling()}, 3000);
+    }
   }
 
   shakeMe() {
@@ -49,8 +56,30 @@ export class AppComponent {
     setTimeout(() => {this.css_flip = false;},1000);
   }
 
-  shakeBounceFlip() {
-    this.shakeBounceFlipNumber++;
+  shakeNbounce(){
+    this.shake1 = true;
+    setTimeout(()=>{
+      this.shake1 = false;
+      this.bounce1 = true;}
+      , 1000);
+      setTimeout(() => {this.bounce1 = false;}, 3000);
+  }
+
+  all(){
+    this.shake = true;
+    setTimeout(() => {
+      this.shake = false;
+      this.bounce = true;
+    }, 1000);
+
+    setTimeout(() => {
+      this.bounce = false;
+      this.flip = true
+    }, 3000);
+
+    setTimeout(() => {
+      this.flip = false
+    }, 5000);
   }
 
 }
